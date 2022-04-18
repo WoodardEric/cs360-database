@@ -1,6 +1,8 @@
 package com.cs360;
 
 import java.io.File;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import org.apache.catalina.WebResourceRoot;
 import org.apache.catalina.core.StandardContext;
@@ -10,6 +12,13 @@ import org.apache.catalina.webresources.StandardRoot;
 
 public class app {
     public static void main(String[] args) throws Exception {
+
+         Statement st = DBConnection.getConnection().createStatement();
+         ResultSet rs = st.executeQuery("SELECT VERSION()");
+
+        if (rs.next()) {
+            System.out.println(rs.getString(1));
+        }
 
         String webappDirLocation = "src/main/webapp/";
         Tomcat tomcat = new Tomcat();

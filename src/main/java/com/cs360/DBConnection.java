@@ -7,9 +7,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBConnection {
-    private static String url = "jdbc:postgresql://localhost:5432/testdb";
+    private static String url = "jdbc:postgresql://localhost:5432/cs360";
     private static String user = "postgres";
-    private static String password = "1234";
+    private static String password = "2855";
 
     public static Connection getConnection() {
         Connection conn = null;
