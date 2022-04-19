@@ -11,11 +11,11 @@
 <form action="Login" method="post" style="width:300px">
   <div class="form-group">
     <label for="InputFirstName">First Name:</label>
-    <input type="text" class="form-control" name="firstName" placeholder="First Name">
+    <input type="text" class="form-control" name="email" placeholder="Email@email.com">
   </div>
   <div class="form-group">
     <label for="InputLastName">Last Name:</label>
-    <input type="text" class="form-control" name="lastName" placeholder="Last Name">
+    <input type="text" class="form-control" name="password" placeholder="password">
   </div>
 
   <button type="submit" class="btn btn-primary" name="login">Login </button>

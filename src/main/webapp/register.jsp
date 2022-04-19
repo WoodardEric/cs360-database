@@ -9,13 +9,13 @@
 <div class="container">
   <h1>Registration</h1>
 
-<form action="Login" method="post" style="width:300px">
+<form action="Register" method="post" style="width:300px">
   <div class="form-group">
-    <label for="InputUserName">Last Name:</label>
-    <input type="text" class="form-control" name="userName" placeholder="User Name">
+    <label for="InputEmail">Email:</label>
+    <input type="text" class="form-control" name="email" placeholder="Email@email.com">
   </div>
     <div class="form-group">
-      <label for="InputPassword">Last Name:</label>
+      <label for="InputPassword">Password:</label>
       <input type="text" class="form-control" name="password" placeholder="Password">
     </div>
   <div class="form-group">
@@ -27,11 +27,11 @@
     <input type="text" class="form-control" name="lastName" placeholder="Last Name">
   </div>
     <div class="form-group">
-      <label for="InputAddress">Last Name:</label>
+      <label for="InputAddress">Address:</label>
       <input type="text" class="form-control" name="address" placeholder="1234 west st">
     </div>
     <div class="form-group">
-          <label for="InputPhone">Last Name:</label>
+          <label for="InputPhone">Phone Number:</label>
           <input type="text" class="form-control" name="phone" placeholder="555-555-5555">
         </div>
 

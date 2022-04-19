@@ -1,17 +1,12 @@
 package com.cs360;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,14 +18,16 @@ public class Login extends HttpServlet {
             resp.sendRedirect("register.jsp");
             return;
         }
-        String firstName = req.getParameter("firstName");
-        String lastName = req.getParameter("lastName");
-        System.out.println("Login attempt" + firstName + " " + lastName);
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        System.out.println("Login attempt: " + email);
         Connection con = DBConnection.getConnection();
         try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from customer where firstname = '" + firstName + "'");
-            if (rs.next()) {
+            PreparedStatement preparedStatement = con.prepareStatement("select password from customer where email = ?");
+            preparedStatement.setString(1, email);
+            ResultSet rs = preparedStatement.executeQuery();
+            rs.next();
+            if (rs.getString("password").equals(password)) {
                 System.out.println("Login Sucessfully");
             }
         } catch (SQLException ex) {
