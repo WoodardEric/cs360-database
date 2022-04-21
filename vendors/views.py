@@ -2,4 +2,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("products index test")
+    return HttpResponse("vendors index test")
