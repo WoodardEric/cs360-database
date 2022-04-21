@@ -1,4 +1,4 @@
-from msilib.schema import Class
+# from msilib.schema import Class
 from unittest import result
 from django.utils import timezone
 from django.shortcuts import render
