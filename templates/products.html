@@ -1,10 +1,7 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Products</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
 <h1>Products</h1>
 <ul>
     <form action="" method="POST">
@@ -20,3 +17,4 @@
     <li>No products yet.</li>
 {% endfor %}
 </ul>
+{% endblock %}
