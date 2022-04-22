@@ -1,0 +1,43 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ user.username }}'s Cart</h1>
+<ul>
+    <div class="row">
+        <div class="col">
+          <label class="col">Item</label>
+        </div>
+        <div class="col">
+          <label class="col">price</label>
+        </div>
+        <div class="col">
+          <label class="col">quantity</label>
+        </div>
+      </div>
+      <hr>
+{% for item in cart %}
+<form action="cart" method="POST">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col">
+        <label class="col">{{item.product.name}}</label>
+      </div>
+      <div class="col">
+        <label class="col">{{item.product.price}}</label>
+      </div>
+      <div class="col">
+        <label class="col">{{item.quantity}}</label>
+      </div>
+    </div>
+    <div class="form-row">
+        <input type="hidden" name="product" id="product" value="{{ item.product.id }}">
+        </div>
+    <button type="submit" class="btn btn-primary btn-sm btn-danger btn-block">Remove</button><br>
+  </form>
+{% empty %}
+    <li>cart is empty</li>
+{% endfor %}
+</ul>
+{% endblock %}

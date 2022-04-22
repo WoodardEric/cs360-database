@@ -1,6 +1,6 @@
-from enum import Enum, IntEnum
 from pickle import FALSE
 from django.db import models
+from django.contrib.auth.models import User
 
 class ProductType(models.TextChoices):
     PHONE = 'phone'
@@ -14,3 +14,11 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.name) + ": $" + str(self.price)
+    
+class Cart(models.Model):
+    customer = models.ForeignKey(User, verbose_name="customer", on_delete=models.CASCADE, null=False)
+    product = models.ForeignKey(Product, verbose_name="product", on_delete=models.CASCADE, null=False)
+    quantity = models.PositiveIntegerField(max_length=99, default=1, null=False)
+    
+    def __str__(self):
+        return str(self.product) + " x " + str(self.quantity)
