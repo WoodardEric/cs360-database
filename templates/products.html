@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+</head>
+<body>
+<h1>Products</h1>
+<ul>
+    <form action="" method="POST">
+        {% csrf_token %} 
+        <input type="text" name="name">
+        <input type="submit" name="submit" value="Search">
+    </form>
+
+{% for product in products %}
+    <li>{{ product }}</li>
+    <hr/>
+{% empty %}
+    <li>No products yet.</li>
+{% endfor %}
+</ul>
