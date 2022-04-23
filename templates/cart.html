@@ -3,45 +3,43 @@
 {% block content %}
   <h2>{{ user.username }}'s Cart</h2>
 
-  <ul>
-    <div class="row">
-      <div class="col">
-        <label class="col">Item</label>
-      </div>
-      <div class="col">
-        <label class="col">Price</label>
-      </div>
-      <div class="col">
-        <label class="col">Quantity</label>
-      </div>
+  <div class="row">
+    <div class="col">
+      <label class="col">Item</label>
     </div>
+    <div class="col">
+      <label class="col">Price</label>
+    </div>
+    <div class="col">
+      <label class="col">Quantity</label>
+    </div>
+  </div>
 
-    <hr>
+  <hr>
 
-    {% for item in cart %}
-      <form action="cart" method="POST">
-        {% csrf_token %}
-        <div class="row">
-          <div class="col">
-            <label class="col">{{item.product.name}}</label>
-          </div>
-          <div class="col">
-            <label class="col">{{item.product.price}}</label>
-          </div>
-          <div class="col">
-            <label class="col">{{item.quantity}}</label>
-          </div>
+  {% for item in cart %}
+    <form action="cart" method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col">
+          <label class="col">{{item.product.name}}</label>
         </div>
-
-        <div class="form-row">
-          <input type="hidden" name="product" id="product" value="{{ item.product.id }}">
+        <div class="col">
+          <label class="col">{{item.product.price}}</label>
         </div>
+        <div class="col">
+          <label class="col">{{item.quantity}}</label>
+        </div>
+      </div>
 
-        <button type="submit" class="btn btn-primary btn-sm btn-danger btn-block">Remove</button><br>
-      </form>
+      <div class="form-row">
+        <input type="hidden" name="product" id="product" value="{{ item.product.id }}">
+      </div>
 
-      {% empty %}
-        <li>cart is empty</li>
-    {% endfor %}
-  </ul>
+      <button type="submit" class="btn btn-primary btn-sm btn-danger btn-block">Remove</button><br>
+    </form>
+
+    {% empty %}
+      <li>cart is empty</li>
+  {% endfor %}
 {% endblock %}
