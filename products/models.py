@@ -22,3 +22,6 @@ class Cart(models.Model):
     
     def __str__(self):
         return str(self.product) + " x " + str(self.quantity)
+    
+    class Meta:
+       unique_together = ("customer", "product")

@@ -3,6 +3,7 @@
 
 {% block content %}
 
+
 <h1>{{ user.username }}'s Cart</h1>
 <ul>
     <div class="row">
@@ -28,16 +29,26 @@
         <label class="col">{{item.product.price}}</label>
       </div>
       <div class="col">
-        <label class="col">{{item.quantity}}</label>
+        <input type="number" class="form-control" id="quantity" value="{{item.quantity}}">
       </div>
     </div>
     <div class="form-row">
-        <input type="hidden" name="product" id="product" value="{{ item.product.id }}">
+        <input type="hidden" name="product" id="product" min="0" max="99" value="{{ item.product.id }}">
         </div>
-    <button type="submit" class="btn btn-primary btn-sm btn-danger btn-block">Remove</button><br>
+    <button type="submit" class="btn btn-sm btn-danger btn-block">Remove</button><br>
   </form>
 {% empty %}
     <li>cart is empty</li>
 {% endfor %}
 </ul>
+
+{% if cart %}
+<label>Total price: ${{total}}</label>
+<a href="{% url 'purchase' %}" class="btn btn-success btn-block">
+  <span class="glyphicon glyphicon-th-list"></span> Purchase Cart
+</a>
+{% else %}
+<button type="button" class="btn btn-secondary btn-block" disabled>Purchase Cart</button>  
+{% endif %}
+
 {% endblock %}
