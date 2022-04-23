@@ -1,37 +1,40 @@
-
 {% extends "base.html" %}
 
-
 {% block content %}
-<h1>Products</h1>
-<ul>
-<form action="" method="POST">
-    {% csrf_token %} 
-    <input type="text" name="name">
-    <input type="submit" name="submit" value="Search">
-</form>
+  <h2>Products</h2>
 
-<ul class="list-group">
-{% for product in products %}
-<li>
-<form action="add_to_cart" method="POST" value="{{ request.path }}">
-{% csrf_token %}
-<div class="card-body">
-<h5 class="card-title">{{ product.name }}</h5>
-<p class="card-text">Type: {{ product.type }}</p>
-<p class="card-text">Brand: {{ product.brand }}</p>
-<p class="card-text">Price: ${{ product.price }}</p>
-<div class="form-row">
-<input type="hidden" name="product" id="product" value="{{ product.id }}">
-</div>
-{% if user.is_authenticated %}
-<button type="submit" class="btn btn-primary btn-sm">Add to Cart</button><br>
-{% endif %}
-</form>
-</li>
+  <ul>
+    <form action="" method="POST">
+      {% csrf_token %} 
+      <input type="text" name="name">
+      <input type="submit" name="submit" value="Search">
+    </form>
 
-{% empty %}
-    <li>No products yet.</li>
-{% endfor %}
-</ul>
+    <ul class="list-group">
+      {% for product in products %}
+        <li>
+          <form action="add_to_cart" method="POST" value="{{ request.path }}">
+            {% csrf_token %}
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">Type: {{ product.type }}</p>
+              <p class="card-text">Brand: {{ product.brand }}</p>
+              <p class="card-text">Price: ${{ product.price }}</p>
+
+              <div class="form-row">
+                <input type="hidden" name="product" id="product" value="{{ product.id }}">
+              </div>
+
+              {% if user.is_authenticated %}
+                <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button><br>
+              {% endif %}
+            </div>
+          </form>
+        </li>
+
+        {% empty %}
+          <li>No products yet.</li>
+      {% endfor %}
+    </ul>
+  </ul>
 {% endblock %}
