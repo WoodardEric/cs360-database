@@ -1,6 +1,8 @@
 from pickle import FALSE
+from turtle import screensize
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import *
 
 class ProductType(models.TextChoices):
     PHONE = 'phone'
@@ -11,6 +13,9 @@ class Product(models.Model):
     name = models.CharField(max_length=200, null=False)
     brand = models.CharField(max_length=200, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
+    description = models.CharField(max_length=200, null=False)
+    size = models.PositiveIntegerField(null=False, validators=[MinValueValidator(1), MaxValueValidator(100)],)
+    shipping = models.DecimalField(max_digits=5, decimal_places=2, null=False)
 
     def __str__(self):
         return str(self.name) + ": $" + str(self.price)

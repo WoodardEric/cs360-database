@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <h1><b>{{ product.name }}</b></h1>
+      </div>
+      </div>
+    <div class="row">
+        <div class="col-sm">
+          Type: {{ product.type }}
+      </div>
+      <div class="col-sm">
+        Brand: {{ product.brand }}
+    </div>
+    <div class="col-sm">
+      Screen Size: {{ product.size }}"
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      Price: ${{ product.price }}
+    </div>
+    <div class="col-sm">
+      Shipping: ${{ product.shipping }}
+    </div>
+</div>
+  <h5>{{ product.description }}<h5>
+    <a href="{{request.META.HTTP_REFERER}}">Go back</a>
+
+{% endblock %}

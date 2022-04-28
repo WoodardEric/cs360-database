@@ -1,3 +1,4 @@
+from audioop import reverse
 from itertools import product
 import re
 from django.http import HttpResponse, HttpResponseRedirect
@@ -21,8 +22,15 @@ def add_to_cart(request):
         cart.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-def index(request):
-    if request.method == "POST":
+def item(request, item_id):
+    item = Product.objects.get(id=item_id)
+    return render(request, 'item.html', {"product":item})
+
+def products(request):
+    if request.POST.get('View', None):
+        item = Product.objects.filter(id=request.POST.get("product"))
+        return HttpResponseRedirect(reverse('item', args=(id,)), {"product":item})
+    elif request.POST.get('addCart', None):
         query_name = request.POST.get('name', None)
         results = Product.objects.filter(name__contains=query_name)
         return render(request, 'products.html', {"products":results})
@@ -40,7 +48,6 @@ def cart(request):
     product = request.POST.get("product")
     if product != None:
         Cart.objects.filter(customer=request.user, product=product).delete()
-
 
     results = Cart.objects.filter(customer=request.user.id)
     total = 0
