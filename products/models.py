@@ -20,6 +20,9 @@ class Product(models.Model):
     def __str__(self):
         return str(self.name) + ": $" + str(self.price)
     
+    class Meta:
+        ordering = ('name', 'brand', 'size',)
+    
 class Cart(models.Model):
     customer = models.ForeignKey(User, verbose_name="customer", on_delete=models.CASCADE, null=False)
     product = models.ForeignKey(Product, verbose_name="product", on_delete=models.CASCADE, null=False)

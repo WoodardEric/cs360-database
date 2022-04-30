@@ -1,9 +1,12 @@
 from audioop import reverse
 from itertools import product
+from pickle import NONE
 import re
+import string
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import *
+from django.db.models import *
 from django.contrib.auth.decorators import login_required
 
 @login_required 
@@ -26,18 +29,44 @@ def item(request, item_id):
     item = Product.objects.get(id=item_id)
     return render(request, 'item.html', {"product":item})
 
+def is_valid_param(param):
+    return param != '' and param is not None
+
 def products(request):
+    context = {}
+    context["types"] = ProductType.names
+    context["brands"] = Product.objects.order_by().values_list('brand', flat=True).distinct()
+    context["max_price"] = Product.objects.all().aggregate(Max('price'))
+    context["min_price"] = Product.objects.all().aggregate(Min('price'))
+    context["sizes"] = Product.objects.order_by('size').values_list('size', flat=True).distinct()
+    max_price = request.POST.get("max_price")
+    min_price = request.POST.get("min_price")
+    
     if request.POST.get('View', None):
-        item = Product.objects.filter(id=request.POST.get("product"))
-        return HttpResponseRedirect(reverse('item', args=(id,)), {"product":item})
-    elif request.POST.get('addCart', None):
-        query_name = request.POST.get('name', None)
-        results = Product.objects.filter(name__contains=query_name)
-        return render(request, 'products.html', {"products":results})
-    else:
-        context = {}
-        context["products"] = Product.objects.all(); 
-        return render(request, 'products.html', context)
+        context["product"] = Product.objects.filter(id=request.POST.get("product"))
+        return HttpResponseRedirect(reverse('item', args=(id,)), context)
+    
+    filters = {
+    key: value
+    for key, value in request.POST.items()
+    if key in ['brand', 'type', 'size'] and value != ""
+    }
+
+    query_name = request.POST.get('name', None)
+    if (query_name == None):
+        query_name = ""
+    
+    qs = Product.objects.filter(name__contains=query_name, **filters)
+    if is_valid_param(max_price):
+        qs = qs.filter(price__lte=max_price)
+        
+    if is_valid_param(min_price):
+        qs = qs.filter(price__gt=min_price)
+        
+    context["products"] = qs
+    return render(request, 'products.html', context)
+
+
 
 def purchase(request):
     Cart.objects.filter(customer=request.user.id).delete()
