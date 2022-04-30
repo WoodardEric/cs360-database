@@ -18,14 +18,15 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm">
+    <div class="col-sm-4">
       Price: ${{ product.price }}
     </div>
-    <div class="col-sm">
+    <div class="col-sm-4">
       Shipping: ${{ product.shipping }}
     </div>
 </div>
-  <h5>{{ product.description }}<h5>
+<br></br>
+<p style="padding: 10px; border: 4px solid blue;"><font size="6">{{ product.description }}</font></p>
     <a href="{{request.META.HTTP_REFERER}}">Go back</a>
 
 {% endblock %}
