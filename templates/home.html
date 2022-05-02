@@ -3,22 +3,36 @@
 {% block content %}
   <h2>Home</h2>
 
-  <!-- Description (stub for now) -->
-  <p>Welcome to the ultimate BestBuy shopping experience!</p>
+  <div class = "row">
+    <!-- Description -->
+    <div class = "col">
+      <p>Welcome to the ultimate BestBuy shopping experience! Choose from a wide
+        selection of quality products. Find products by name, and filter your
+        search based on brand, price, and other specifications. Browse a variety
+        of internet services based on your appliance needs. View individual
+        vendors to see the products offered by each distributor.</p>
 
-  <!-- Quick navigation buttons -->
-  <ul>
-    <li>
-      <a class="btn btn-primary" href="/products/" role="button">Browse Products</a>
-      <br></br>
-    </li>
-    <li>
-      <a class="btn btn-primary" href="{% url 'login' %}" role="button">Log In</a>
-      <br></br>
-    </li>
-    <li>
-      <a class="btn btn-primary" href="{% url 'signup' %}" role="button">Sign Up</a>
-      <br></br>
-    </li>
-  </ul>
+      <p>To begin, click one of the buttons below.</p>
+
+      <br>
+
+      <!-- Quick navigation buttons -->
+      <div class="row">
+        <div class="col-3">
+          <a class="btn btn-primary btn-block" href="/products/" role="button">Browse Products</a>
+        </div>
+        <div class="col-3">
+          <a class="btn btn-primary btn-block" href="{% url 'login' %}" role="button">Log In</a>
+        </div>
+        <div class="col-3">
+          <a class="btn btn-primary btn-block" href="{% url 'signup' %}" role="button">Sign Up</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logo -->
+    <div class = "col-4">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Best_Buy_Logo.svg" alt="BestBuy">
+    </div>
+  </div>
 {% endblock %}
