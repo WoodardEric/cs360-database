@@ -61,10 +61,10 @@
   </form>
 
   <!-- Products list -->
-  <ul class="list-group">
+  <div class="row">
     {% for product in products %}
       <!-- Individual product -->
-      <li>
+      <div class="col" id="product">
         <form action="add_to_cart" method="POST" value="{{ request.path }}">
           {% csrf_token %}
 
@@ -80,15 +80,18 @@
             </div>
 
             {% if user.is_authenticated %}
+              <br>
               <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
             {% endif %}
           </div>
         </form>
-      </li>
+      </div>
 
       <!-- No products in database -->
       {% empty %}
-        <li>No products yet.</li>
+        <div class="col" id="product">
+          <p>No products yet</p>
+        </div>
     {% endfor %}
-  </ul>
+  </div>
 {% endblock %}
