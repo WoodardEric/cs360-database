@@ -7,8 +7,10 @@
   <form action="" method="POST">
     {% csrf_token %}
 
+    <!-- Filters -->
     <div class="form-row">
-      <div class="form-group col-md-2">
+      <!-- Type filter -->
+      <div class="col form-group">
         <label class="form-label" for="type">Type</label>
         <select id="type" Name="type" class="form-control">
           <option selected></option>
@@ -17,7 +19,9 @@
           {% endfor %}
         </select>
       </div>
-      <div class="form-group col-md-2">
+
+      <!-- Brand filter -->
+      <div class="col form-group">
         <label class="form-label" for="brand">Brand</label>
         <select id="brand" Name="brand" class="form-control">
           <option selected></option>
@@ -26,8 +30,10 @@
           {% endfor %}
         </select>
       </div>
-      <div class="form-group col-md-2">
-        <label class="form-label" for="size">Screen Size (inches)</label>
+
+      <!-- Screen size filter -->
+      <div class="col form-group">
+        <label class="form-label" for="size">Screen size (inches)</label>
         <select id="size" Name="size" class="form-control">
           <option selected></option>
           {% for size in sizes %}
@@ -35,16 +41,21 @@
           {% endfor %}
         </select>
       </div>
-      <div class="form-outline">
-        <label class="form-label" for="min_price">Min Price</label>
+
+      <!-- Min price filter -->
+      <div class="col form-outline">
+        <label class="form-label" for="min_price">Minimum price</label>
         <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="min_price" name="min_price" class="form-control" />
       </div>
-      <div class="form-outline">
-        <label class="form-label" for="max_price">Max Price</label>
-        <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="max_price" name = "max_price" class="form-control" />
+
+      <!-- Max price filter -->
+      <div class="col form-outline">
+        <label class="form-label" for="max_price">Maximum price</label>
+        <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="max_price" name="max_price" class="form-control" />
       </div>
     </div>
 
+    <!-- Search bar -->
     <input type="text" name="name">
     <input type="submit" name="submit" value="Search">
   </form>
