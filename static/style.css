@@ -26,10 +26,17 @@ img {
 #product {
     min-width: 256px;
     max-width: 384px;
+    margin: 32px;
+}
+
+#product, #text-box {
+    padding: 16px;
     border-style: solid;
     border-radius: 10px;
     border-width: 2px;
     border-color: cornflowerblue;
-    margin: 32px;
-    padding: 16px;
+}
+
+#text-box {
+    font-size: larger;
 }
