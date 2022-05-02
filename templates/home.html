@@ -3,20 +3,22 @@
 {% block content %}
   <h2>Home</h2>
 
+  <!-- Description (stub for now) -->
   <p>Welcome to the ultimate BestBuy shopping experience!</p>
 
+  <!-- Quick navigation buttons -->
   <ul>
     <li>
       <a class="btn btn-primary" href="/products/" role="button">Browse Products</a>
-      <p></p>
+      <br></br>
     </li>
     <li>
       <a class="btn btn-primary" href="{% url 'login' %}" role="button">Log In</a>
-      <p></p>
+      <br></br>
     </li>
     <li>
       <a class="btn btn-primary" href="{% url 'signup' %}" role="button">Sign Up</a>
-      <p></p>
+      <br></br>
     </li>
   </ul>
 {% endblock %}

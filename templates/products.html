@@ -3,21 +3,22 @@
 {% block content %}
   <h2>Products</h2>
 
-  <ul>
-    <form action="" method="POST">
-      {% csrf_token %} 
+  <!-- Search filters and name -->
+  <form action="" method="POST">
+    {% csrf_token %}
+
     <div class="form-row">
       <div class="form-group col-md-2">
-      <label class="form-label" for="type">Type</label>
-      <select id="type" Name="type" class="form-control">
-        <option selected></option>
-        {% for type in types %}
-          <option value="{{ type }}">{{ type }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="form-group col-md-2">
-      <label class="form-label" for="brand">Brand</label>
+        <label class="form-label" for="type">Type</label>
+        <select id="type" Name="type" class="form-control">
+          <option selected></option>
+          {% for type in types %}
+            <option value="{{ type }}">{{ type }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <label class="form-label" for="brand">Brand</label>
         <select id="brand" Name="brand" class="form-control">
           <option selected></option>
           {% for brand in brands %}
@@ -27,55 +28,56 @@
       </div>
       <div class="form-group col-md-2">
         <label class="form-label" for="size">Screen Size (inches)</label>
-          <select id="size" Name="size" class="form-control">
-            <option selected></option>
-            {% for size in sizes %}
-              <option value="{{ size }}">{{ size }}"</option>
-            {% endfor %}
-          </select>
-        </div>
+        <select id="size" Name="size" class="form-control">
+          <option selected></option>
+          {% for size in sizes %}
+            <option value="{{ size }}">{{ size }}"</option>
+          {% endfor %}
+        </select>
+      </div>
       <div class="form-outline">
         <label class="form-label" for="min_price">Min Price</label>
         <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="min_price" name="min_price" class="form-control" />
-
       </div>
       <div class="form-outline">
         <label class="form-label" for="max_price">Max Price</label>
         <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="max_price" name = "max_price" class="form-control" />
-
       </div>
     </div>
-      <input type="text" name="name">
-      <input type="submit" name="submit" value="Search">
-    </form>
-  </div>
 
-    <ul class="list-group">
-      {% for product in products %}
-        <li>
-          <form action="add_to_cart" method="POST" value="{{ request.path }}">
-            {% csrf_token %}
-            <div class="card-body">
-              <h5 class="card-title">{{ product.name }}</h5>
-              <p class="card-text">Type: {{ product.type }}</p>
-              <p class="card-text">Brand: {{ product.brand }}</p>
-              <p class="card-text">Price: ${{ product.price }}</p>
-              <a href="/products/{{ product.id }}" class="card-link">View Item</a>
-              <div class="form-row">
-                <input type="hidden" name="product" id="product" value="{{ product.id }}">
-              </div>
+    <input type="text" name="name">
+    <input type="submit" name="submit" value="Search">
+  </form>
 
-              {% if user.is_authenticated %}
-                <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button><br>
-              {% endif %}
+  <!-- Products list -->
+  <ul class="list-group">
+    {% for product in products %}
+      <!-- Individual product -->
+      <li>
+        <form action="add_to_cart" method="POST" value="{{ request.path }}">
+          {% csrf_token %}
+
+          <!-- Product details (and "add to cart" button) -->
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">Type: {{ product.type }}</p>
+            <p class="card-text">Brand: {{ product.brand }}</p>
+            <p class="card-text">Price: ${{ product.price }}</p>
+            <a href="/products/{{ product.id }}" class="card-link">View Item</a>
+            <div class="form-row">
+              <input type="hidden" name="product" id="product" value="{{ product.id }}">
             </div>
-          </form>
-        </li>
 
-        {% empty %}
-          <li>No products yet.</li>
-      {% endfor %}
-    </ul>
+            {% if user.is_authenticated %}
+              <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button><br>
+            {% endif %}
+          </div>
+        </form>
+      </li>
+
+      <!-- No products in database -->
+      {% empty %}
+        <li>No products yet.</li>
+    {% endfor %}
   </ul>
-  
 {% endblock %}

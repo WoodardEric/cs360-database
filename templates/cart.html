@@ -1,54 +1,67 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <h2>{{ user.username }}'s Cart</h2>
 
-
-<h1>{{ user.username }}'s Cart</h1>
-<ul>
-    <div class="row">
-        <div class="col">
-          <label class="col">Item</label>
-        </div>
-        <div class="col">
-          <label class="col">price</label>
-        </div>
-        <div class="col">
-          <label class="col">quantity</label>
-        </div>
-      </div>
-      <hr>
-{% for item in cart %}
-<form action="cart" method="POST">
-    {% csrf_token %}
+  <ul>
+    <!-- Table header -->
     <div class="row">
       <div class="col">
-        <label class="col">{{item.product.name}}</label>
+            <label class="col">Item</label>
       </div>
       <div class="col">
-        <label class="col">{{item.product.price}}</label>
+            <label class="col">Price</label>
       </div>
       <div class="col">
-        <input type="number" class="form-control" id="quantity" min="0" max="99" value="{{item.quantity}}">
+            <label class="col">Quantity</label>
+      </div>
+      <div class="col">
+            <label class="col">Remove Item</label>
       </div>
     </div>
-    <div class="form-row">
-        <input type="hidden" name="product" id="product" value="{{ item.product.id }}">
+
+    <!-- Divider -->
+    <hr>
+
+    <!-- Item list -->
+    {% for item in cart %}
+      <form action="cart" method="POST">
+        {% csrf_token %}
+
+        <!-- Details and remove button -->
+        <div class="row">
+          <div class="col">
+            <label class="col">{{item.product.name}}</label>
+          </div>
+          <div class="col">
+            <label class="col">{{item.product.price}}</label>
+          </div>
+          <div class="col">
+            <input type="number" class="form-control" id="quantity" min="0" max="99" value="{{item.quantity}}">
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-sm btn-danger btn-block">Remove</button><br>
+          </div>
         </div>
-    <button type="submit" class="btn btn-sm btn-danger btn-block">Remove</button><br>
-  </form>
-{% empty %}
-    <li>cart is empty</li>
-{% endfor %}
-</ul>
 
-{% if cart %}
-<label>Total price: ${{total}}</label>
-<a href="{% url 'purchase' %}" class="btn btn-success btn-block">
-  <span class="glyphicon glyphicon-th-list"></span> Purchase Cart
-</a>
-{% else %}
-<button type="button" class="btn btn-secondary btn-block" disabled>Purchase Cart</button>  
-{% endif %}
+        <div class="form-row">
+          <input type="hidden" name="product" id="product" value="{{ item.product.id }}">
+        </div>
+      </form>
 
+      {% empty %}
+        <li>cart is empty</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Total price and purchase button -->
+  {% if cart %}
+    <label><b>Total price: ${{total}}</b></label>
+
+    <a href="{% url 'purchase' %}" class="btn btn-success btn-block">
+      <span class="glyphicon glyphicon-th-list"></span> Purchase Cart
+    </a>
+  {% else %}
+    <button type="button" class="btn btn-secondary btn-block" disabled>Purchase Cart</button>  
+  {% endif %}
 {% endblock %}
-

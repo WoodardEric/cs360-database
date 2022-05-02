@@ -1,32 +1,36 @@
 {% extends "base.html" %}
+
 {% block content %}
-<div class="container">
+  <h2>{{ product.name }}</h2>
+
+  <!-- Item details -->
+  <div class="container">
+    <!-- Values -->
     <div class="row">
       <div class="col-sm">
-        <h1><b>{{ product.name }}</b></h1>
-      </div>
-      </div>
-    <div class="row">
-        <div class="col-sm">
           Type: {{ product.type }}
       </div>
       <div class="col-sm">
         Brand: {{ product.brand }}
+      </div>
+      <div class="col-sm">
+        Screen Size: {{ product.size }}"
+      </div>
     </div>
-    <div class="col-sm">
-      Screen Size: {{ product.size }}"
+    <div class="row">
+      <div class="col-sm-4">
+        Price: ${{ product.price }}
+      </div>
+      <div class="col-sm-4">
+        Shipping: ${{ product.shipping }}
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-4">
-      Price: ${{ product.price }}
-    </div>
-    <div class="col-sm-4">
-      Shipping: ${{ product.shipping }}
-    </div>
-</div>
-<br></br>
-<p style="padding: 10px; border: 4px solid blue;"><font size="6">{{ product.description }}</font></p>
-    <a href="{{request.META.HTTP_REFERER}}">Go back</a>
+    <br></br>
 
+    <!-- Description -->
+    <p style="padding: 10px; border: 4px solid blue;"><font size="5">{{ product.description }}</font></p>
+    
+    <!-- Back button -->
+    <a href="{{request.META.HTTP_REFERER}}">Go back</a>
+  </div>
 {% endblock %}
