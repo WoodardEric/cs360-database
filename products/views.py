@@ -66,8 +66,6 @@ def products(request):
     context["products"] = qs
     return render(request, 'products.html', context)
 
-
-
 def purchase(request):
     Cart.objects.filter(customer=request.user.id).delete()
     return render(request, 'purchase.html')
@@ -83,4 +81,9 @@ def cart(request):
     for item in results:
         total += (item.product.price * item.quantity)
     return render(request, 'cart.html', {"cart":results, "total":total})
-    
+
+def services(request):
+    return render(request, 'services.html')
+
+def vendors(request):
+    return render(request, 'vendors.html')
