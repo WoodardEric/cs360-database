@@ -2,4 +2,80 @@
 
 {% block content %}
   <h2>Services</h2>
+
+  <!-- Search filters and name -->
+  <form action="" method="POST">
+    {% csrf_token %}
+
+    <!-- Filters -->
+    <div class="form-row">
+      <!-- Phones filter -->
+      <div class="col form-outline">
+        <label class="form-label" for="phones">Phone count</label>
+        <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="min_price" name="min_price" class="form-control" />
+      </div>
+
+      <!-- TVs filter -->
+      <div class="col form-outline">
+        <label class="form-label" for="tvs">TV count</label>
+        <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="min_price" name="min_price" class="form-control" />
+      </div>
+
+      <!-- Bandwidth filter -->
+      <div class="col form-outline">
+        <label class="form-label" for="bandwidth">Bandwidth (MB)</label>
+        <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="min_price" name="min_price" class="form-control" />
+      </div>
+
+      <!-- Min price filter -->
+      <div class="col form-outline">
+        <label class="form-label" for="min_price">Minimum price</label>
+        <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="min_price" name="min_price" class="form-control" />
+      </div>
+
+      <!-- Max price filter -->
+      <div class="col form-outline">
+        <label class="form-label" for="max_price">Maximum price</label>
+        <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="max_price" name="max_price" class="form-control" />
+      </div>
+    </div>
+
+    <!-- Search bar -->
+    <input type="text" name="name">
+    <input type="submit" name="submit" value="Search">
+  </form>
+
+  <!-- Services list -->
+  <div class="row">
+    {% for service in services %}
+      <!-- Individual service -->
+      <div class="col" id="product">
+        <form action="add_to_cart" method="POST" value="{{ request.path }}">
+          {% csrf_token %}
+
+          <!-- Product details (and "add to cart" button) -->
+          <div class="card-body">
+            <h5 class="card-title">{{ service.name }}</h5>
+            <p class="card-text">Price: ${{ service.price }}</p>
+            <p class="card-text">Bandwidth: ${{ service.bandwidth }}</p>
+            <a href="{% url 'services' %}{{ service.id }}" class="card-link">View Item</a>
+            <div class="form-row">
+              <input type="hidden" name="service" id="service" value="{{ service.id }}">
+            </div>
+
+            {% if user.is_authenticated %}
+              <br>
+              <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
+            {% endif %}
+          </div>
+        </form>
+      </div>
+
+      <!-- No services in database -->
+      {% empty %}
+        <div class="col" id="product">
+          <p>No services yet</p>
+        </div>
+    {% endfor %}
+  </div>
 {% endblock %}

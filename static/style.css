@@ -9,8 +9,8 @@ body {
 #content {
     background-color: white;
     padding: 96px;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 10vw;
+    margin-right: 10vw;
     flex-grow: 1;
 }
 

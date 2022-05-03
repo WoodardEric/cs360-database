@@ -22,7 +22,7 @@ class Product(models.Model):
     
     class Meta:
         ordering = ('name', 'brand', 'size',)
-    
+
 class Cart(models.Model):
     customer = models.ForeignKey(User, verbose_name="customer", on_delete=models.CASCADE, null=False)
     product = models.ForeignKey(Product, verbose_name="product", on_delete=models.CASCADE, null=False)
@@ -33,3 +33,25 @@ class Cart(models.Model):
     
     class Meta:
        unique_together = ("customer", "product")
+
+class Service(models.Model):
+    name = models.CharField(max_length=200, null=False)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
+    description = models.CharField(max_length=200, null=False)
+    bandwidth = models.PositiveIntegerField(null=False, validators=[MinValueValidator(1), MaxValueValidator(100)],)
+
+    def __str__(self):
+        return str(self.name) + ": $" + str(self.price)
+    
+    class Meta:
+        ordering = ('name', 'bandwidth',)
+
+class Vendor(models.Model):
+    name = models.CharField(max_length=200, null=False)
+    address = models.CharField(max_length=200, null=False)
+    email = models.EmailField()
+    product = models.ForeignKey(Product, verbose_name="product", on_delete=models.CASCADE, null=False)
+    service = models.ForeignKey(Service, verbose_name="service", on_delete=models.CASCADE, null=False)
+
+    def __str__(self):
+        return str(self.name)
