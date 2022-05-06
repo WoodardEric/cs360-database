@@ -7,7 +7,18 @@ from django.core.validators import *
 class ProductType(models.TextChoices):
     PHONE = 'phone'
     TV = 'tv' 
+    
+class Vendor(models.Model):
+    name = models.CharField(max_length=200, null=False)
+    address = models.CharField(max_length=200, null=False)
+    state = models.CharField(max_length=50, null=False)
+    city = models.CharField(max_length=50, null=False)
+    email = models.EmailField()
+    phone = models.CharField(max_length=12, null=False)
 
+    def __str__(self):
+        return str(self.name)
+    
 class Product(models.Model):
     type = models.CharField(max_length=200, choices=[(tag, tag.value) for tag in ProductType], null=False)
     name = models.CharField(max_length=200, null=False)
@@ -16,12 +27,13 @@ class Product(models.Model):
     description = models.CharField(max_length=200, null=False)
     size = models.PositiveIntegerField(null=False, validators=[MinValueValidator(1), MaxValueValidator(100)],)
     shipping = models.DecimalField(max_digits=5, decimal_places=2, null=False)
+    vendor = models.ForeignKey(Vendor, verbose_name="vendor", on_delete=models.CASCADE, null=False)
 
     def __str__(self):
         return str(self.name) + ": $" + str(self.price)
     
     class Meta:
-        ordering = ('name', 'brand', 'size',)
+        ordering = ('name', 'brand', 'size', 'vendor',)
 
 class Cart(models.Model):
     customer = models.ForeignKey(User, verbose_name="customer", on_delete=models.CASCADE, null=False)
@@ -39,19 +51,10 @@ class Service(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
     description = models.CharField(max_length=200, null=False)
     bandwidth = models.PositiveIntegerField(null=False, validators=[MinValueValidator(1), MaxValueValidator(100)],)
+    vendor = models.ForeignKey(Vendor, verbose_name="vendor", on_delete=models.CASCADE, null=False)
 
     def __str__(self):
         return str(self.name) + ": $" + str(self.price)
     
     class Meta:
         ordering = ('name', 'bandwidth',)
-
-class Vendor(models.Model):
-    name = models.CharField(max_length=200, null=False)
-    address = models.CharField(max_length=200, null=False)
-    email = models.EmailField()
-    product = models.ForeignKey(Product, verbose_name="product", on_delete=models.CASCADE, null=False)
-    service = models.ForeignKey(Service, verbose_name="service", on_delete=models.CASCADE, null=False)
-
-    def __str__(self):
-        return str(self.name)

@@ -8,20 +8,23 @@
     <!-- Values -->
     <div class="row">
       <div class="col-sm">
+        Vendor: {{ product.vendor.name }}
+    </div>
+    <div class="col-sm">
+      Brand: {{ product.brand }}
+    </div>
+      <div class="col-sm">
           Type: {{ product.type }}
-      </div>
-      <div class="col-sm">
-        Brand: {{ product.brand }}
-      </div>
-      <div class="col-sm">
-        Screen Size: {{ product.size }}"
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm">
+        Screen Size: {{ product.size }}"
+      </div>
+      <div class="col-sm">
         Price: ${{ product.price }}
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm">
         Shipping: ${{ product.shipping }}
       </div>
     </div>

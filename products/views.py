@@ -1,13 +1,12 @@
 from audioop import reverse
 from itertools import product
 from pickle import NONE
-import re
-import string
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import *
 from django.db.models import *
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 @login_required 
 def add_to_cart(request):
@@ -36,6 +35,7 @@ def products(request):
     context = {}
     context["types"] = ProductType.names
     context["brands"] = Product.objects.order_by().values_list('brand', flat=True).distinct()
+    context["vendors"] = Vendor.objects.order_by().values_list('name', flat=True).distinct()
     context["max_price"] = Product.objects.all().aggregate(Max('price'))
     context["min_price"] = Product.objects.all().aggregate(Min('price'))
     context["sizes"] = Product.objects.order_by('size').values_list('size', flat=True).distinct()
@@ -51,6 +51,10 @@ def products(request):
     for key, value in request.POST.items()
     if key in ['brand', 'type', 'size'] and value != ""
     }
+    
+    vendor = request.POST.get('vendor')
+    if is_valid_param(vendor):
+        filters['vendor'] = Vendor.objects.get(name=vendor).id
 
     query_name = request.POST.get('name', None)
     if (query_name == None):

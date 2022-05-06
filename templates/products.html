@@ -31,6 +31,17 @@
         </select>
       </div>
 
+        <!-- Vendor filter -->
+        <div class="col form-group">
+          <label class="form-label" for="vendor">Vendor</label>
+          <select id="vendor" Name="vendor" class="form-control">
+            <option selected></option>
+            {% for vendor in vendors %}
+              <option value="{{ vendor }}">{{ vendor }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
       <!-- Screen size filter -->
       <div class="col form-group">
         <label class="form-label" for="size">Screen size (inches)</label>
@@ -71,6 +82,7 @@
           <!-- Product details (and "add to cart" button) -->
           <div class="card-body">
             <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">Vendor: {{ product.vendor.name }}</p>
             <p class="card-text">Type: {{ product.type }}</p>
             <p class="card-text">Brand: {{ product.brand }}</p>
             <p class="card-text">Price: ${{ product.price }}</p>
