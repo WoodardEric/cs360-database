@@ -88,10 +88,44 @@ def cart(request):
 
 def services(request):
     context = {}
-    context["services"] = Service.objects.all(); 
+    
+    if request.POST.get('View', None):
+        context["service"] = Service.objects.filter(id=request.POST.get("service"))
+        return HttpResponseRedirect(reverse('item', args=(id,)), context)
+    
+    filters = {
+        key: value
+        for key, value in request.POST.items()
+        if key in [] and value != ""
+    }
+
+    query_name = request.POST.get('name', None)
+    if (query_name == None):
+        query_name = ""
+
+    qs = Service.objects.filter(name__contains=query_name, **filters)
+
+    context["services"] = qs
     return render(request, 'services.html', context)
 
 def vendors(request):
     context = {}
-    context["vendors"] = Vendor.objects.all(); 
+    
+    if request.POST.get('View', None):
+        context["vendor"] = Vendor.objects.filter(id=request.POST.get("vendor"))
+        return HttpResponseRedirect(reverse('item', args=(id,)), context)
+    
+    filters = {
+        key: value
+        for key, value in request.POST.items()
+        if key in [] and value != ""
+    }
+
+    query_name = request.POST.get('name', None)
+    if (query_name == None):
+        query_name = ""
+
+    qs = Vendor.objects.filter(name__contains=query_name, **filters)
+
+    context["vendors"] = qs
     return render(request, 'vendors.html', context)
