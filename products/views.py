@@ -87,7 +87,9 @@ def cart(request):
     return render(request, 'cart.html', {"cart":results, "total":total})
 
 def services(request):
-    return render(request, 'services.html')
+    context = {}
+    context["services"] = Service.objects.all(); 
+    return render(request, 'services.html', context)
 
 def vendors(request):
     context = {}

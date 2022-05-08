@@ -57,7 +57,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ service.name }}</h5>
             <p class="card-text">Price: ${{ service.price }}</p>
-            <p class="card-text">Bandwidth: ${{ service.bandwidth }}</p>
+            <p class="card-text">Bandwidth: {{ service.bandwidth }}MB</p>
             <a href="{% url 'services' %}{{ service.id }}" class="card-link">View Item</a>
             <div class="form-row">
               <input type="hidden" name="service" id="service" value="{{ service.id }}">

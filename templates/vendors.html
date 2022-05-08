@@ -15,7 +15,7 @@
     {% for vendor in vendors %}
       <!-- Individual vendor -->
       <div class="col" id="product">
-        <form action="add_to_cart" method="POST" value="{{ request.path }}">
+        <form action="" method="POST" value="{{ request.path }}">
           {% csrf_token %}
 
           <!-- Vendor details -->
