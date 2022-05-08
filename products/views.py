@@ -28,6 +28,10 @@ def item(request, item_id):
     item = Product.objects.get(id=item_id)
     return render(request, 'item.html', {"product":item})
 
+def service_item(request, item_id):
+    item = Service.objects.get(id=item_id)
+    return render(request, 'service_item.html', {"service":item})
+
 def is_valid_param(param):
     return param != '' and param is not None
 

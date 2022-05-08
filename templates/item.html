@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Item – BestBuy{% endblock %}
+{% block title %}Product Item – BestBuy{% endblock %}
 
 {% block content %}
   <h2>{{ product.name }}</h2>
@@ -11,14 +11,15 @@
     <div class="row">
       <div class="col-sm">
         Vendor: {{ product.vendor.name }}
-    </div>
-    <div class="col-sm">
-      Brand: {{ product.brand }}
-    </div>
+      </div>
       <div class="col-sm">
-          Type: {{ product.type }}
+        Brand: {{ product.brand }}
+      </div>
+      <div class="col-sm">
+        Type: {{ product.type }}
       </div>
     </div>
+
     <div class="row">
       <div class="col-sm">
         Screen Size: {{ product.size }}"
@@ -30,6 +31,7 @@
         Shipping: ${{ product.shipping }}
       </div>
     </div>
+
     <br>
 
     <!-- Description -->

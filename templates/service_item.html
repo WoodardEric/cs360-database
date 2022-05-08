@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Service Item – BestBuy{% endblock %}
+
+{% block content %}
+  <h2>{{ service.name }}</h2>
+
+  <!-- Item details -->
+  <div class="container">
+    <!-- Values -->
+    <div class="row">
+      <div class="col-sm">
+        Vendor: {{ service.vendor.name }}
+      </div>
+      <div class="col-sm">
+        Bandwidth: {{ service.bandwidth }}MB
+      </div>
+      <div class="col-sm">
+        Price: ${{ service.price }}
+      </div>
+    </div>
+
+    <br>
+
+    <!-- Description -->
+    <p id="text-box">{{ service.description }}</p>
+    
+    <!-- Back button -->
+    <a href="{{request.META.HTTP_REFERER}}">Go back</a>
+  </div>
+{% endblock %}
