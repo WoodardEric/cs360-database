@@ -38,17 +38,6 @@ class Product(models.Model):
     class Meta:
         ordering = ('name', 'brand', 'size', 'vendor',)
 
-class Cart(models.Model):
-    customer = models.ForeignKey(User, verbose_name="customer", on_delete=models.CASCADE, null=False)
-    product = models.ForeignKey(Product, verbose_name="product", on_delete=models.CASCADE, null=False)
-    quantity = models.PositiveIntegerField(default=1, null=False)
-    
-    def __str__(self):
-        return str(self.product) + " x " + str(self.quantity)
-    
-    class Meta:
-       unique_together = ("customer", "product")
-
 class Service(models.Model):
     name = models.CharField(max_length=200, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
@@ -61,3 +50,15 @@ class Service(models.Model):
     
     class Meta:
         ordering = ('name', 'bandwidth',)
+
+class Cart(models.Model):
+    customer = models.ForeignKey(User, verbose_name="customer", on_delete=models.CASCADE, null=False)
+    product = models.ForeignKey(Product, verbose_name="product", on_delete=models.CASCADE, null=True)
+    service = models.ForeignKey(Service, verbose_name="service", on_delete=models.CASCADE, null=True)
+    quantity = models.PositiveIntegerField(default=1, null=False)
+    
+    def __str__(self):
+        return str(self.product) + " x " + str(self.quantity)
+    
+    class Meta:
+       unique_together = ("customer", "product", "service")

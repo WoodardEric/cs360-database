@@ -33,10 +33,20 @@
         <!-- Details and remove button -->
         <div class="row">
           <div class="col">
-            <label class="col">{{item.product.name}}</label>
+            {% if item.product != None %}
+              <label class="col">{{item.product.name}}</label>
+            {% endif %}
+            {% if item.service != None %}
+              <label class="col">{{item.service.name}}</label>
+            {% endif %}
           </div>
           <div class="col">
-            <label class="col">{{item.product.price}}</label>
+            {% if item.product != None %}
+              <label class="col">${{item.product.price}}</label>
+            {% endif %}
+            {% if item.service != None %}
+              <label class="col">${{item.service.price}}</label>
+            {% endif %}
           </div>
           <div class="col">
             <input type="number" class="form-control" id="quantity" min="0" max="99" value="{{item.quantity}}">
@@ -47,7 +57,12 @@
         </div>
 
         <div class="form-row">
-          <input type="hidden" name="product" id="product" value="{{ item.product.id }}">
+          {% if item.product != None %}
+            <input type="hidden" name="product" id="product" value="{{ item.product.id }}">
+          {% endif %}
+          {% if item.service != None %}
+            <input type="hidden" name="service" id="service" value="{{ item.service.id }}">
+          {% endif %}
         </div>
       </form>
 
