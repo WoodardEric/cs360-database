@@ -47,9 +47,9 @@ def products(request):
         return HttpResponseRedirect(reverse('item', args=(id,)), context)
     
     filters = {
-    key: value
-    for key, value in request.POST.items()
-    if key in ['brand', 'type', 'size'] and value != ""
+        key: value
+        for key, value in request.POST.items()
+        if key in ['brand', 'type', 'size'] and value != ""
     }
     
     vendor = request.POST.get('vendor')
@@ -90,4 +90,6 @@ def services(request):
     return render(request, 'services.html')
 
 def vendors(request):
-    return render(request, 'vendors.html')
+    context = {}
+    context["vendors"] = Vendor.objects.all(); 
+    return render(request, 'vendors.html', context)

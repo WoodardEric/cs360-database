@@ -22,7 +22,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ vendor.name }}</h5>
             <p class="card-text">Email: {{ vendor.email }}</p>
-            <a href="{% url 'vendors' %}{{ vendor.id }}" class="card-link">View Vendor Details</a>
+            <p class="card-text">Phone: {{ vendor.phone }}</p>
             <div class="form-row">
               <input type="hidden" name="vendor" id="vendor" value="{{ vendor.id }}">
             </div>
