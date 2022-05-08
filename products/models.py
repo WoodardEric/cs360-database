@@ -18,6 +18,9 @@ class Vendor(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+    class Meta:
+        ordering = ('name', 'email',)
     
 class Product(models.Model):
     type = models.CharField(max_length=200, choices=[(tag, tag.value) for tag in ProductType], null=False)
