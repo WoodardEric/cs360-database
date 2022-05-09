@@ -49,7 +49,7 @@ class Service(models.Model):
         return str(self.name) + ": $" + str(self.price)
     
     class Meta:
-        ordering = ('name', 'bandwidth',)
+        ordering = ('name', 'bandwidth', 'vendor',)
 
 class Cart(models.Model):
     customer = models.ForeignKey(User, verbose_name="customer", on_delete=models.CASCADE, null=False)
