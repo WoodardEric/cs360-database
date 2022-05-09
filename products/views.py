@@ -114,6 +114,15 @@ def cart(request):
 
 def services(request):
     context = {}
+    context["vendors"] = Vendor.objects.order_by().values_list('name', flat=True).distinct()
+    context["max_bandwidth"] = Service.objects.all().aggregate(Max('bandwidth'))
+    context["min_bandwidth"] = Service.objects.all().aggregate(Min('bandwidth'))
+    context["max_price"] = Service.objects.all().aggregate(Max('price'))
+    context["min_price"] = Service.objects.all().aggregate(Min('price'))
+    max_bandwidth = request.POST.get("max_bandwidth")
+    min_bandwidth = request.POST.get("min_bandwidth")
+    max_price = request.POST.get("max_price")
+    min_price = request.POST.get("min_price")
     
     if request.POST.get('View', None):
         context["service"] = Service.objects.filter(id=request.POST.get("service"))
@@ -124,12 +133,24 @@ def services(request):
         for key, value in request.POST.items()
         if key in [] and value != ""
     }
+    
+    vendor = request.POST.get('vendor')
+    if is_valid_param(vendor):
+        filters['vendor'] = Vendor.objects.get(name=vendor).id
 
     query_name = request.POST.get('name', None)
     if (query_name == None):
         query_name = ""
 
     qs = Service.objects.filter(name__contains=query_name, **filters)
+    if is_valid_param(max_price):
+        qs = qs.filter(price__lte=max_price)
+    if is_valid_param(min_price):
+        qs = qs.filter(price__gt=min_price)
+    if is_valid_param(max_bandwidth):
+        qs = qs.filter(bandwidth__lte=max_bandwidth)
+    if is_valid_param(min_bandwidth):
+        qs = qs.filter(bandwidth__gt=min_bandwidth)
 
     context["services"] = qs
     return render(request, 'services.html', context)

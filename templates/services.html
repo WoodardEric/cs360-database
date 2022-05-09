@@ -11,22 +11,27 @@
 
     <!-- Filters -->
     <div class="form-row">
-      <!-- Phones filter -->
-      <div class="col form-outline">
-        <label class="form-label" for="phones">Phone count</label>
-        <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="min_price" name="min_price" class="form-control" />
+      <!-- Vendor filter -->
+      <div class="col form-group">
+        <label class="form-label" for="vendor">Vendor</label>
+        <select id="vendor" Name="vendor" class="form-control">
+          <option selected></option>
+          {% for vendor in vendors %}
+            <option value="{{ vendor }}">{{ vendor }}</option>
+          {% endfor %}
+        </select>
       </div>
 
-      <!-- TVs filter -->
+      <!-- Min bandwidth filter -->
       <div class="col form-outline">
-        <label class="form-label" for="tvs">TV count</label>
-        <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="min_price" name="min_price" class="form-control" />
+        <label class="form-label" for="min_bandwidth">Minimum bandwidth (MB)</label>
+        <input type="number" min="{{ min_bandwidth }}" max="{{ max_bandwidth }}" id="min_bandwidth" name="min_bandwidth" class="form-control" />
       </div>
 
-      <!-- Bandwidth filter -->
+      <!-- Max bandwidth filter -->
       <div class="col form-outline">
-        <label class="form-label" for="bandwidth">Bandwidth (MB)</label>
-        <input type="number" min="{{ min_price }}" max="{{ max_price }}" id="min_price" name="min_price" class="form-control" />
+        <label class="form-label" for="max_bandwidth">Maximum bandwidth (MB)</label>
+        <input type="number" min="{{ min_bandwidth }}" max="{{ max_bandwidth }}" id="max_bandwidth" name="max_bandwidth" class="form-control" />
       </div>
 
       <!-- Min price filter -->
@@ -58,6 +63,7 @@
           <!-- Product details (and "add to cart" button) -->
           <div class="card-body">
             <h5 class="card-title">{{ service.name }}</h5>
+            <p class="card-text">Vendor: {{ service.vendor.name }}</p>
             <p class="card-text">Price: ${{ service.price }}</p>
             <p class="card-text">Bandwidth: {{ service.bandwidth }}MB</p>
             <a href="{% url 'services' %}{{ service.id }}" class="card-link">View Item</a>
