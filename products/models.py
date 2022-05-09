@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 from django.core.validators import *
 
 class ProductType(models.TextChoices):
-    PHONE = 'phone'
-    TV = 'tv' 
+    PHONE = 'PHONE'
+    TV = 'TV'
+    TABLET = 'TABLET'
     
 class Vendor(models.Model):
     name = models.CharField(max_length=200, null=False)
