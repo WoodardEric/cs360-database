@@ -1,12 +1,10 @@
 from audioop import reverse
-from itertools import product
 from pickle import NONE
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import *
 from django.db.models import *
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
 
 @login_required 
 def add_to_cart(request):

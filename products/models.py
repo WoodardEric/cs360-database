@@ -1,8 +1,6 @@
-from pickle import FALSE
-from turtle import screensize
 from django.db import models
-from django.contrib.auth.models import User
 from django.core.validators import *
+from accounts.models import Customer
 
 class ProductType(models.TextChoices):
     PHONE = 'PHONE'
@@ -53,7 +51,7 @@ class Service(models.Model):
         ordering = ('name', 'bandwidth', 'vendor',)
 
 class Cart(models.Model):
-    customer = models.ForeignKey(User, verbose_name="customer", on_delete=models.CASCADE, null=False)
+    customer = models.ForeignKey(Customer, verbose_name="customer", on_delete=models.CASCADE, null=False)
     product = models.ForeignKey(Product, verbose_name="product", on_delete=models.CASCADE, null=True)
     service = models.ForeignKey(Service, verbose_name="service", on_delete=models.CASCADE, null=True)
     quantity = models.PositiveIntegerField(default=1, null=False)
@@ -63,3 +61,4 @@ class Cart(models.Model):
     
     class Meta:
        unique_together = ("customer", "product", "service")
+       

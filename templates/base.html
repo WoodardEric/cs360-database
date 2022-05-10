@@ -45,8 +45,8 @@
         {% block login %}
           {% if user.is_authenticated %}
             <ul class="nav navbar-nav navbar-right">
-              <li class="navbar-text">
-                {{user.username}}
+              <li class="navbar-item">
+                <a class="nav-link" href="{% url 'account' %}">{{user.username}}</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'cart' %}">Cart</a>

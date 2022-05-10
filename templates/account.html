@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %} 
+<h2>{{ user.username }}'s account</h2>
+<form action="update_account" method="POST">
+  {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputuser">User Name</label>
+        <input type="text" class="form-control" name="inputUser" id="inputuser" value="{{ user.username}}">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputEmail">Email</label>
+        <input type="email" class="form-control" name="inputEmail" id="inputEmail" value="{{ user.email }}">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputAddress">Address</label>
+      <input type="text" class="form-control" name="inputAddress" id="inputAddress" value="{{ user.address }}">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputCity">City</label>
+        <input type="text" class="form-control" name="inputCity" id="inputCity" value="{{ user.city }}">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputState">State</label>
+        <input type="text" class="form-control" name="inputState" id="inputState" value="{{ user.state }}">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="inputZip">Zip</label>
+        <input type="text" class="form-control" id="inputZip">
+      </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputPhone">Phone</label>
+          <input type="text" class="form-control" name="inputPhone" id="inputPhone" value="{{ user.phone }}">
+        </div>
+    </div>
+    <div class="form-group">
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+
+  <form action="delete_account" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">delete</button>
+  </form>
+
+  {% endblock %}
