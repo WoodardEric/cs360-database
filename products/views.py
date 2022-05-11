@@ -1,8 +1,8 @@
 from audioop import reverse
+import datetime
 from pickle import NONE
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from matplotlib.pyplot import table
 from .models import *
 from django.db.models import *
 from django.contrib.auth.decorators import login_required
@@ -90,7 +90,17 @@ def products(request):
     return render(request, 'products.html', context)
 
 def purchase(request):
-    Cart.objects.filter(customer=request.user.id).delete()
+    qs = Cart.objects.filter(customer=request.user.id)
+    for item in qs:
+        history = History()
+        history.customer = request.user
+        history.product_name = item.product.name
+        history.price = item.product.price
+        history.vendor_name = item.product.vendor
+        history.quantity = item.quantity
+        history.date_purchased = datetime.date.today()
+        history.save()
+        item.delete()
     return render(request, 'purchase.html')
 
 @login_required 

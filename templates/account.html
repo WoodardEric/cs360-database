@@ -47,5 +47,28 @@
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">delete</button>
   </form>
+  <h3>Purchase History:</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Vendor</th>
+        <th scope="col">Date Purchased</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in history %}
+      <tr>
+        <th scope="row">{{ product.product_name }}</th>
+        <td>{{ product.price }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>{{ product.vendor_name }}</td>
+        <td>{{ product.date_purchased }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
   {% endblock %}

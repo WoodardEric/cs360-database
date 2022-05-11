@@ -61,4 +61,11 @@ class Cart(models.Model):
     
     class Meta:
        unique_together = ("customer", "product", "service")
-       
+
+class History(models.Model):
+    customer = models.ForeignKey(Customer, verbose_name="customer", on_delete=models.CASCADE, null=False)
+    vendor_name = models.CharField(max_length=200, null=False)
+    product_name =  models.CharField(max_length=200, null=False)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
+    quantity = models.PositiveIntegerField(default=1, null=False)
+    date_purchased = models.DateField(null=False)

@@ -3,6 +3,7 @@ from django.views.generic.edit import CreateView
 from django.shortcuts import render
 from django.contrib.auth import logout
 from accounts.models import Customer
+from products.models import History
 
 from .forms import CustomUserCreationForm
 
@@ -12,7 +13,9 @@ class SignUpView(CreateView):
     template_name = "registration/signup.html"
 
 def account(request):
-    return render(request, 'account.html')
+    context = {}
+    context['history'] = History.objects.filter(customer=request.user)
+    return render(request, 'account.html', context)
 
 def update_account(request):
     customer = request.user
