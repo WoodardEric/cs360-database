@@ -2,6 +2,7 @@ from audioop import reverse
 from pickle import NONE
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from matplotlib.pyplot import table
 from .models import *
 from django.db.models import *
 from django.contrib.auth.decorators import login_required
@@ -130,6 +131,17 @@ def services(request):
     min_bandwidth = request.POST.get("min_bandwidth")
     max_price = request.POST.get("max_price")
     min_price = request.POST.get("min_price")
+
+    device_MB = 0
+    phone_count = request.POST.get("phone_count")
+    if phone_count != None and phone_count != "":
+        device_MB += int(phone_count) * 3
+    TV_count = request.POST.get("TV_count")
+    if TV_count != None and TV_count != "":
+        device_MB += int(TV_count) * 5
+    tablet_count = request.POST.get("tablet_count")
+    if tablet_count != None and tablet_count != "":
+        device_MB += int(tablet_count) * 4
     
     if request.POST.get('View', None):
         context["service"] = Service.objects.filter(id=request.POST.get("service"))
@@ -158,6 +170,8 @@ def services(request):
         qs = qs.filter(bandwidth__lte=max_bandwidth)
     if is_valid_param(min_bandwidth):
         qs = qs.filter(bandwidth__gte=min_bandwidth)
+    if is_valid_param(device_MB):
+        qs = qs.filter(bandwidth__gte=device_MB)
 
     context["services"] = qs
     return render(request, 'services.html', context)

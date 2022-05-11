@@ -9,7 +9,30 @@
   <form action="" method="POST">
     {% csrf_token %}
 
-    <!-- Filters -->
+    <!-- "Needs" filters -->
+    <div class="form-row">
+      <!-- Phone count filter -->
+      <div class="col form-outline">
+        <label class="form-label" for="phone_count">Phone count</label>
+        <input type="number" id="phone_count" name="phone_count" class="form-control" />
+      </div>
+
+      <!-- TV count filter -->
+      <div class="col form-outline">
+        <label class="form-label" for="TV_count">TV count</label>
+        <input type="number" id="TV_count" name="TV_count" class="form-control" />
+      </div>
+
+      <!-- Tablet count filter -->
+      <div class="col form-outline">
+        <label class="form-label" for="tablet_count">Tablet count</label>
+        <input type="number" id="tablet_count" name="tablet_count" class="form-control" />
+      </div>
+    </div>
+
+    <br>
+
+    <!-- Other filters -->
     <div class="form-row">
       <!-- Vendor filter -->
       <div class="col form-group">
