@@ -83,7 +83,7 @@ def products(request):
         qs = qs.filter(price__lte=max_price)
         
     if is_valid_param(min_price):
-        qs = qs.filter(price__gt=min_price)
+        qs = qs.filter(price__gte=min_price)
         
     context["products"] = qs
     return render(request, 'products.html', context)
@@ -96,10 +96,19 @@ def purchase(request):
 def cart(request):
     product = request.POST.get("product")
     service = request.POST.get("service")
-    if product != None:
-        Cart.objects.filter(customer=request.user, product=product).delete()
-    if service != None:
-        Cart.objects.filter(customer=request.user, service=service).delete()
+    new_quantity = request.POST.get("quantity")
+    if product is not None:
+        if new_quantity is not None:
+            new_quantity = int(new_quantity)
+            Cart.objects.filter(customer=request.user, product=product).update(quantity=new_quantity)
+        else:
+            Cart.objects.filter(customer=request.user, product=product).delete()
+    elif service is not None:
+        if new_quantity is not None:
+            new_quantity = int(new_quantity)
+            Cart.objects.filter(customer=request.user, service=service).update(quantity=new_quantity)
+        else:
+            Cart.objects.filter(customer=request.user, service=service).delete()
 
     results = Cart.objects.filter(customer=request.user.id)
     total = 0
@@ -144,11 +153,11 @@ def services(request):
     if is_valid_param(max_price):
         qs = qs.filter(price__lte=max_price)
     if is_valid_param(min_price):
-        qs = qs.filter(price__gt=min_price)
+        qs = qs.filter(price__gte=min_price)
     if is_valid_param(max_bandwidth):
         qs = qs.filter(bandwidth__lte=max_bandwidth)
     if is_valid_param(min_bandwidth):
-        qs = qs.filter(bandwidth__gt=min_bandwidth)
+        qs = qs.filter(bandwidth__gte=min_bandwidth)
 
     context["services"] = qs
     return render(request, 'services.html', context)
