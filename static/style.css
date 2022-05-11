@@ -40,3 +40,8 @@ img {
 #text-box {
     font-size: larger;
 }
+
+#sample-image {
+    display: table;
+    margin: 0 auto;
+}
