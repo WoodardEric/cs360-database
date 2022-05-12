@@ -1,10 +1,9 @@
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.shortcuts import render
 from django.contrib.auth import logout
+from accounts.models import Customer
 from products.models import History
-from django.contrib.auth.decorators import login_required
 
 from .forms import CustomUserCreationForm
 
@@ -34,11 +33,3 @@ def delete_account(request):
     logout(request)
     user.delete()
     return render(request, 'home.html')
-
-@login_required 
-def unsubscribe(request):
-    user = request.user
-    if user.service != None:
-        user.service = None
-        user.save()
-    return render(request, "home.html")

@@ -23,15 +23,20 @@ def add_to_cart(request):
         cart.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
 @login_required 
-def subscribe(request):
+def service_add_to_cart(request):
     user = request.user
     service = Service.objects.get(id=request.POST['service'])
-    #if user.service == None:
-    user.service = service
-    user.save()
-
+    if Cart.objects.filter(service=service, customer=user).exists():
+        cart = Cart.objects.get(service=service, customer=user)
+        cart.quantity += 1
+        cart.save()
+    else:
+        cart = Cart() 
+        cart.customer = user
+        cart.quantity = 1
+        cart.service = service
+        cart.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def item(request, item_id):
@@ -101,6 +106,7 @@ def purchase(request):
 @login_required 
 def cart(request):
     product = request.POST.get("product")
+    service = request.POST.get("service")
     new_quantity = request.POST.get("quantity")
     if product is not None:
         if new_quantity is not None:
@@ -108,12 +114,20 @@ def cart(request):
             Cart.objects.filter(customer=request.user, product=product).update(quantity=new_quantity)
         else:
             Cart.objects.filter(customer=request.user, product=product).delete()
+    elif service is not None:
+        if new_quantity is not None:
+            new_quantity = int(new_quantity)
+            Cart.objects.filter(customer=request.user, service=service).update(quantity=new_quantity)
+        else:
+            Cart.objects.filter(customer=request.user, service=service).delete()
 
     results = Cart.objects.filter(customer=request.user.id)
     total = 0
     for item in results:
         if item.product is not None:
             total += (item.product.price * item.quantity)
+        if item.service is not None:
+            total += (item.service.price * item.quantity)
     return render(request, 'cart.html', {"cart":results, "total":total})
 
 def services(request):
