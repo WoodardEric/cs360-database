@@ -47,6 +47,41 @@
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">delete</button>
   </form>
+
+  <br>
+  <hr style="height:4px;background-color:cornflowerblue;border:none;" noshade />
+
+  {% if user.service != None %}
+  <h4>Subscribed Service:</h4>
+
+  <form action="unsubscribe" method="POST">
+    {% csrf_token %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Monthly Price</th>
+          <th scope="col">Bandwidth</th>
+          <th scope="col">Vendor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">{{ user.service.name }}</th>
+          <td>${{ user.service.price }}</td>
+          <td>{{ user.service.bandwidth }}Mbps</td>
+          <td>{{ user.service.vendor }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-danger">unsubscribe</button>
+  </form>
+  <hr style="height:4px;background-color:cornflowerblue;border:none;" noshade />
+  <br>
+  {% endif %}
+
+
   <h3>Purchase History:</h3>
   <table class="table">
     <thead>
@@ -62,7 +97,7 @@
       {% for product in history %}
       <tr>
         <th scope="row">{{ product.product_name }}</th>
-        <td>{{ product.price }}</td>
+        <td>${{ product.price }}</td>
         <td>{{ product.quantity }}</td>
         <td>{{ product.vendor_name }}</td>
         <td>{{ product.date_purchased }}</td>
