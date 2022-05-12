@@ -80,7 +80,7 @@
     {% for service in services %}
       <!-- Individual service -->
       <div class="col" id="product">
-        <form action="add_to_cart" method="POST" value="{{ request.path }}">
+        <form action="subscribe" method="POST" value="{{ request.path }}">
           {% csrf_token %}
 
           <!-- Product details (and "add to cart" button) -->
@@ -96,7 +96,7 @@
 
             {% if user.is_authenticated %}
               <br>
-              <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
+              <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
             {% endif %}
           </div>
         </form>

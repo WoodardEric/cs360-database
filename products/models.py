@@ -1,7 +1,8 @@
 from django.db import models
 from django.core.validators import *
-from accounts.models import Customer
+from django.contrib.auth.models import AbstractUser
 
+ 
 class ProductType(models.TextChoices):
     PHONE = 'PHONE'
     TV = 'TV'
@@ -50,18 +51,28 @@ class Service(models.Model):
     class Meta:
         ordering = ('name', 'bandwidth', 'vendor',)
 
+class Customer(AbstractUser):
+    address = models.CharField(max_length=200, null=False)
+    state = models.CharField(max_length=50, null=False)
+    city = models.CharField(max_length=50, null=False)
+    email = models.EmailField()
+    phone = models.CharField(max_length=12, null=False)
+    service = models.ForeignKey(Service, verbose_name="service", on_delete=models.CASCADE, null=True)
+    
+    def __str__(self):
+        return str(self.first_name + self.last_name)
+
 class Cart(models.Model):
     customer = models.ForeignKey(Customer, verbose_name="customer", on_delete=models.CASCADE, null=False)
     product = models.ForeignKey(Product, verbose_name="product", on_delete=models.CASCADE, null=True)
-    service = models.ForeignKey(Service, verbose_name="service", on_delete=models.CASCADE, null=True)
     quantity = models.PositiveIntegerField(default=1, null=False)
     
     def __str__(self):
         return str(self.product) + " x " + str(self.quantity)
     
     class Meta:
-       unique_together = ("customer", "product", "service")
-
+       unique_together = ("customer", "product")
+       
 class History(models.Model):
     customer = models.ForeignKey(Customer, verbose_name="customer", on_delete=models.CASCADE, null=False)
     vendor_name = models.CharField(max_length=200, null=False)

@@ -36,9 +36,6 @@
             {% if item.product != None %}
               <label class="col">{{item.product.name}}</label>
             {% endif %}
-            {% if item.service != None %}
-              <label class="col">{{item.service.name}}</label>
-            {% endif %}
           </div>
           <div class="col">
             {% if item.product != None %}
@@ -59,9 +56,6 @@
         <div class="form-row">
           {% if item.product != None %}
             <input type="hidden" name="product" id="product" value="{{ item.product.id }}">
-          {% endif %}
-          {% if item.service != None %}
-            <input type="hidden" name="service" id="service" value="{{ item.service.id }}">
           {% endif %}
         </div>
       </form>
